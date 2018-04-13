@@ -27,6 +27,13 @@
   become: true
   when: deployment_type != 'origin'
 
+- name: copy ansible.cfg file
+  copy:
+    src: ../files/ansible.cfg
+    dest: "~{{amazon_user}}/ansible.cfg"
+  delegate_to: "{{bastion_public_ip}}"
+  remote_user: "{{amazon_user}}"
+
 - name: copy inventory for openshift istallation
   template:
     src: "../files/openshift_inventory.cfg"
