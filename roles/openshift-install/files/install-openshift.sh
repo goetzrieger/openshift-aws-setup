@@ -8,8 +8,8 @@ if [ $1 = "origin" ]; then
 fi
 
 {% if ocp_version|float <= 3.7  %}
-    ansible-playbook -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/byo/config.yml
+    ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/byo/config.yml
 {% else %}
-    ansible-playbook -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/prerequisites.yml
-    ansible-playbook -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/deploy_cluster.yml
+    ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/prerequisites.yml
+    ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/deploy_cluster.yml
 {% endif %}
