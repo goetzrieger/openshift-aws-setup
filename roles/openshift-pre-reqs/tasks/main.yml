@@ -12,7 +12,7 @@
       - "kexec-tools"
       - "sos"
       - "psacct"
-      - "docker-1.12.6"
+      - "docker-1.13.1"
       - "ntp"
     state: "present"
   become: true
