@@ -13,7 +13,7 @@
     name={{ item.public_ip }}
     groups=created_vms
     instance_name=node{{ item.index }}
-  with_items: "{{ nodes_ip }}"
+  with_items: "{{ nodes }}"
 
 - name: Add master to created_nodes group
   add_host:
@@ -28,7 +28,7 @@
     name={{ item.public_ip }}
     groups=created_nodes
     instance_name=node{{ item.index }}
-  with_items: "{{ nodes_ip }}"
+  with_items: "{{ nodes }}"
 
 - name: Master host
   add_host:
@@ -41,3 +41,11 @@
     name={{ bastion_public_ip}}
     groups=bastion
     instance_name=bastion
+
+- name: Gluster hosts
+  add_host:
+    name={{ item.public_ip }}
+    groups=gluster
+    instance_name={{ item.index}}
+  with_items: "{{nodes[0:3]}}"
+  when: install_gluster

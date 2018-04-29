@@ -24,6 +24,13 @@
           - "ansible_version.minor >= 4"
         msg: "This script is only supported with the 2.4.1 version or later of Ansible"
     
+    - name: Verify App Nodes For Gluster
+      assert:
+        that: 
+          - "install_gluster and app_nodes >= 3"
+        msg: "To install gluster you must have at least three app nodes defined, only {{app_nodes}} defined in variables"
+
+
     - fail: msg="Variables required to register subscriptions are missing, please confirm that either rhsm_username, rhsm_password and rhsm_pool OR rhsm_key_id and rhsm_org_id is defined"
       when: (deployment_type == 'openshift-enterprise') and not (((rhsm_username is defined) and (rhsm_password is defined) and (rhsm_pool is defined)) or ((rhsm_key_id is defined) and (rhsm_org_id is defined)))
 
@@ -118,6 +125,29 @@
   - openshift-pre-reqs
 
 #############################################################
+# Gluster Prerequisites
+#############################################################
+- name: Setup gluster master prereqs
+  hosts: master
+  remote_user: "{{ amazon_user }}"
+
+  vars_files:
+    - vars/aws-config.yml
+
+  roles:
+  - {role: gluster-master-prereqs, when: install_gluster}
+
+- name: Setup gluster node prereqs
+  hosts: gluster
+  remote_user: "{{ amazon_user }}"
+
+  vars_files:
+    - vars/aws-config.yml
+
+  roles:
+  - {role: gluster-node-prereqs, when: install_gluster}
+
+#############################################################
 # Install Openshift
 #############################################################
 - name: Install OpenShift
@@ -127,7 +157,7 @@
     - vars/aws-config.yml
 
   vars:
-#    nodes_ip: "{{ lookup('file','nodes.json') | from_json }}"
+#    nodes: "{{ lookup('file','nodes.json') | from_json }}"
     state: 'present'
 
   pre_tasks:
@@ -180,7 +210,7 @@
 
   roles:
   - add-users
-  - {role: openshift-gluster-sc, when: install_gluster}
+  # - {role: gluster-sc, when: install_gluster}
   - {role: update-ssl-cockpit, when: master_ssl_cert_file is defined}
   - {role: update-ssl-router, when: wildcard_ssl_cert_file is defined}
   - {role: disable-service-catalog, when: disable_service_catalog}

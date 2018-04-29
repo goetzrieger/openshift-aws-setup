@@ -13,6 +13,7 @@
   become: true
   ignore_errors: true
 
-- name: Enable gluster default storage class
-  shell: "oc patch storageclass glusterfs-storage -p '{\"metadata\": {\"annotations\": {\"storageclass.kubernetes.io/is-default-class\": \"true\"}}}' -n openshift"
-  become: true
+# Not needed in 3.9
+# - name: Enable gluster default storage class
+#   shell: "oc patch storageclass glusterfs-storage -p '{\"metadata\": {\"annotations\": {\"storageclass.kubernetes.io/is-default-class\": \"true\"}}}' -n openshift"
+#   become: true

@@ -95,15 +95,22 @@ ocp_version: "3.9"
 install_node_selector: true
 
 #####################################################################
-# This playbook can optionally install CNS (Gluster) for applications. It
-# requires three nodes dedicated to it which will be provisioned by the
-# playbook automatically. Note this installs gluster for
-# apps use only, the registry will continue to use AWS storage.
+# This playbook can optionally install CNS (Gluster) for applications. 
+# It will use the first three app nodes as the gluster nodes, all
+# infra components requiring storage will use gluster instead of
+# AWS.
+#
+# Also note that the AWS cloud provider will be disabled if installing
+# gluster.
+#
+# Note some changes were made to support 3.9, this is may not be useable
+# in 3.7.
+#
 #####################################################################
 install_gluster: false
-gluster_ami_size: m4.xlarge
-# This volume size is per gluster node so total storage is (gluster_volume_size * 3)
-gluster_volume_size: 100
+# Total storage available to OpenShift from gluster
+gluster_volume_size: 250
+
 
 #####################################################################
 # Variables you do not want to change unless you are sure you know 

@@ -1,5 +1,4 @@
 ---
-
 - name: install pre-req packages on bastion
   yum:
     name:
