@@ -34,7 +34,7 @@
   when: hosted_zone_id.stdout_lines[0] is defined
 
 - name: Delete Public Route
-  include: delete-route.yml zone={{ public_dns_zone }} record={{ public_dns_zone }} private_zone="false"
+  include: delete-route.yml zone={{ public_dns_zone }} record={{ public_master_dns }} private_zone="false"
 
 - name: Delete Public Wildcard Route
   include: delete-route.yml zone={{ public_dns_zone }} record="*.{{public_subdomain_prefix}}.{{ public_dns_zone }}" private_zone="false"

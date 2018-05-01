@@ -21,6 +21,7 @@
         msg: 'Finished tearing down environment {{namespace}}'
 
   roles:
+  - define-derived-vars
   - teardown-virtual-machines
   - teardown-security-groups
   - teardown-vpc

@@ -7,6 +7,10 @@ region: "us-west-2"
 
 # The public DNS for cluster, you must have a Route 53 zone configured for this
 public_dns_zone: "ocplab.com"
+# Prefix for the master, i.e. if public zone is 'ocplab.com' and the master prefix is 'master'
+# then the OpenShift console will be available at 'master.ocplab.com'. If you leave this as an empty
+# string it will use the public_dns_zone as the A record
+prefix_master_dns: "master"
 # Prefix for subdomain for wildcard DNS, i.e. *.apps.ocplab.com
 public_subdomain_prefix: "apps"
 
@@ -109,13 +113,23 @@ install_node_selector: true
 #####################################################################
 install_gluster: false
 # Total storage available to OpenShift from gluster
-gluster_volume_size: 250
-
+gluster_volume_size: 300
+# The block volume size, should be less then gluster_volume_size but big
+# enough to host metrics and logging blocks
+gluster_block_host_volume_size: 100
 
 #####################################################################
 # Variables you do not want to change unless you are sure you know 
 # what you are doing
 #####################################################################
+
+# metrics volume size, if using gluster and change make sure it fits in block
+# volume size
+metrics_volume_size: 25
+
+# logging volume size, if using gluster and change make sure it fits in block
+# volume size
+logging_volume_size: 25
 
 # namespace is used to uniquely differentiate the stack
 namespace: "openshift"

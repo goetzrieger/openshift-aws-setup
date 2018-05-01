@@ -78,7 +78,11 @@
         from_port: "8443"
         to_port: "8443"
         cidr_ip: "0.0.0.0/0"
-
+        # NTP/chrony
+      - proto: "udp"
+        from_port: "123"
+        to_port: "123"
+        cidr_ip: "0.0.0.0/0"
 # Security group which allows SSH access to a host. Used for the bastion.
 - name: create openshift-ssh
   ec2_group:

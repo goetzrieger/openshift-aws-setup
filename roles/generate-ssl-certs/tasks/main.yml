@@ -5,10 +5,10 @@
 
 - name: install epel repository
   yum:
-    name: "{{epel_repo_url}}"
+    name: "epel-release"
     state: present
   register: result
-  until: '"failed" not in result'
+  until: result | succeeded
   retries: 5
   delay: 10
   become: true
@@ -43,7 +43,7 @@
 
 # Generate master SSL certificate
 - name: generate master ssl certificate
-  shell: "certbot certonly -d {{public_dns_zone}} --standalone -m {{domain_email_address}} -n --agree-tos"  
+  shell: "certbot certonly -d {{public_master_dns}} --standalone -m {{domain_email_address}} -n --agree-tos"  
   become: true
   
 # Generate wildcard SSL certificate
@@ -60,8 +60,8 @@
 
 - name: fetch master SSL certificates to local machine
   fetch:
-    src: /etc/letsencrypt/live/{{public_dns_zone}}/{{item}}
-    dest: certs/letsencrypt/{{public_dns_zone}}/{{item}}
+    src: /etc/letsencrypt/live/{{public_master_dns}}/{{item}}
+    dest: certs/letsencrypt/{{public_master_dns}}/{{item}}
     flat: true
   become: true
   with_items:

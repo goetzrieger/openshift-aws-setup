@@ -9,6 +9,7 @@
     - vars/aws-config.yml
 
   roles:
+  - define-derived-vars
   - setup-vpc
   - setup-security-groups
   - setup-virtual-machines
@@ -70,7 +71,7 @@
     - vars/aws-config.yml
 
   roles:    
-
+  - define-derived-vars
   - {role: generate-ssl-certs, when: use_lets_encrypt}
 
 #############################################################
@@ -83,20 +84,17 @@
   vars_files:
     - vars/aws-config.yml
 
-  tasks:
-    - name: Set master SSL facts for lets encrypt
-      set_fact:
-        master_ssl_cert_file: certs/letsencrypt/{{public_dns_zone}}/fullchain.pem
-        master_ssl_key_file: certs/letsencrypt/{{public_dns_zone}}/privkey.pem
-      when: use_lets_encrypt
+  roles:
+  - define-derived-vars
 
+  post_tasks:
     - name: create directory for certs
-      file: path=certs/{{public_dns_zone}} state=directory
+      file: path=certs/{{public_master_dns}} state=directory
 
     - name: copy master SSL certificates to bastion
       copy:
         src: "{{item}}"
-        dest: certs/{{public_dns_zone}}/{{item | basename}}
+        dest: certs/{{public_master_dns}}/{{item | basename}}
       with_items:
         - "{{master_ssl_cert_file}}"
         - "{{master_ssl_key_file}}"
@@ -160,14 +158,8 @@
 #    nodes: "{{ lookup('file','nodes.json') | from_json }}"
     state: 'present'
 
-  pre_tasks:
-  - name: Set master SSL facts for lets encrypt
-    set_fact:
-      master_ssl_cert_file: certs/letsencrypt/{{public_dns_zone}}/fullchain.pem
-      master_ssl_key_file: certs/letsencrypt/{{public_dns_zone}}/privkey.pem
-    when: use_lets_encrypt
-
   roles:
+  - define-derived-vars
   - openshift-install
 
 #############################################################
@@ -179,19 +171,6 @@
 
   vars_files:
     - vars/aws-config.yml
-
-  pre_tasks:
-  - name: Set master SSL facts for lets encrypt
-    set_fact:
-      master_ssl_cert_file: certs/letsencrypt/{{public_dns_zone}}/fullchain.pem
-      master_ssl_key_file: certs/letsencrypt/{{public_dns_zone}}/privkey.pem
-    when: use_lets_encrypt
-
-  - name: Set wildcard SSL facts
-    set_fact:
-      wildcard_ssl_cert_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/fullchain.pem
-      wildcard_ssl_key_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/privkey.pem
-    when: use_lets_encrypt
 
   post_tasks:
    - name: SSL certificate information
@@ -209,6 +188,7 @@
      when: use_lets_encrypt
 
   roles:
+  - define-derived-vars
   - add-users
   # - {role: gluster-sc, when: install_gluster}
   - {role: update-ssl-cockpit, when: master_ssl_cert_file is defined}
@@ -224,10 +204,13 @@
   vars_files:
     - vars/aws-config.yml
 
-  tasks:
+  roles:
+  - define-derived-vars
+
+  post_tasks:
    - name: Confirmation message
      debug:
       msg: 
         - 'The script has completed successfully.'
         - 'Master public IP: {{master_public_ip}}'
-        - 'OpenShift console: https://{{public_dns_zone}}:8443'
+        - 'OpenShift console: https://{{public_master_dns}}:8443'
