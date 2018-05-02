@@ -19,6 +19,13 @@
     dest: "/etc/cockpit/ws-certs.d/1-my-cert.cert"
   become: true
 
+- name: Add cockpit dashboard
+  yum:
+    name:
+      - "cockpit-dashboard"
+    state: "present"
+  become: true
+
 - name: restart cockpit
   systemd:
      name: cockpit

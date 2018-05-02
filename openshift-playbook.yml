@@ -28,8 +28,9 @@
     - name: Verify App Nodes For Gluster
       assert:
         that: 
-          - "install_gluster and app_nodes >= 3"
+          - "app_nodes >= 3"
         msg: "To install gluster you must have at least three app nodes defined, only {{app_nodes}} defined in variables"
+      when: install_gluster
 
 
     - fail: msg="Variables required to register subscriptions are missing, please confirm that either rhsm_username, rhsm_password and rhsm_pool OR rhsm_key_id and rhsm_org_id is defined"
