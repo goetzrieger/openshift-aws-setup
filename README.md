@@ -20,13 +20,20 @@ AWS related configuration can be customised by modifying ```vars/aws-config.yaml
  IdentityFile ~/.ssh/mykeypair.pem
  ```
 
-Where my keypair is the name of your keypair. Obviously you need to have a copy of mykeypair.pem in the .ssh directory as well in order for it to be used.
+Where ```mykeypair``` is the name of your keypair. Obviously you need to have a copy of mykeypair.pem in the .ssh directory as well in order for it to be used.
+
+## Ansible Compatibility
+
+Note that some specific versions of Ansible will not work due to bugs, here is a list of the ones I am aware of:
+
+* 2.4.1 - https://github.com/ansible/ansible/issues/31905
+* 2.5.1 - https://github.com/ansible/ansible/issues/39234
 
 ## Container Native Storage (CNS) Gluster
 
-The playbook can optionally install CNS storage (gluster) as the default persistent storage provider for application storage. This will provision an additional three nodes dedicated to CNS. To use this feature, set the ```install_gluster``` to true and configure other parameters as needed. Note this is only used for application storage, the registry remains on AWS storage.
+The playbook can optionally install CNS storage (gluster) as the default persistent storage provider for application storage. This will provision CNS on the first three application nodes. To use this feature, set the ```install_gluster``` to true and configure other parameters as required.
 
-_Note_: You may wish to disable ```install_node_selector``` when installing gluster, see the section further below with regards to details.
+When installing gluster, make sure the volume size is big enough to host metrics and logging volumes + 20% or so.
 
 ## Metrics, Logging and Prometheus (3.7)
 
