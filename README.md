@@ -29,13 +29,6 @@ Note that some specific versions of Ansible will not work due to bugs, here is a
 * 2.4.1 - https://github.com/ansible/ansible/issues/31905
 * 2.5.1 - https://github.com/ansible/ansible/issues/39234
 
-## Ansible Compatibility
-
-Note that some specific versions of Ansible will not work due to bugs, here is a list of the ones I am aware of:
-
-* 2.4.1 - https://github.com/ansible/ansible/issues/31905
-* 2.5.1 - https://github.com/ansible/ansible/issues/39234
-
 ## Container Native Storage (CNS) Gluster
 
 The playbook can optionally install CNS storage (gluster) as the default persistent storage provider for application storage. This will provision CNS on the first three application nodes. To use this feature, set the ```install_gluster``` to true and configure other parameters as required.
