@@ -42,9 +42,9 @@ The playbook can optionally install CNS storage (gluster) as the default persist
 
 When installing gluster, make sure the volume size is big enough to host metrics and logging volumes + 20% or so.
 
-## Metrics, Logging and Prometheus (3.7)
+## Metrics, Logging and Prometheus (3.7+)
 
-The playbook can optionally install metrics, logging or prometheus (on 3.7 only). To do so, change ```install_metrics```, ```install_logging``` and ```install_prometheus``` to true.
+The playbook can optionally install metrics, logging or prometheus (on 3.7+ only). To do so, change ```install_metrics```, ```install_logging``` and ```install_prometheus``` to true.
 
 ## OpenShift Inventory
 
