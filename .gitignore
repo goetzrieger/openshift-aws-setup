@@ -2,6 +2,10 @@
 *.iml
 .idea
 
+# Packer
+build.log
+vars.json
+
 # Compiled classes
 /target
 
