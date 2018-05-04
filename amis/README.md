@@ -6,8 +6,26 @@ Install the [packer](https://www.packer.io) v1.2.3 release.
 
 ## Usage
 
+
+First build core,
+
 ```sh
+cd core
 packer build -var-file=vars.json -color=false packer.json | tee build.log
+```
+
+then build base using `AMI ID` of core.
+
+```sh
+cd base
+packer build -var-file=vars.json -color=false packer.json | tee build.log
+```
+
+Forgot the ID? Try this:
+
+```sh
+cd core
+egrep "${AWS_REGION}\:\sami\-" build.log | cut -d' ' -f2 > ami_id.txt
 ```
 
 ### Example `vars.json` files
