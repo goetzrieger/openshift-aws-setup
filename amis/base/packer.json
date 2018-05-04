@@ -1,6 +1,6 @@
 {
  "variables": {
-  "git_commit": "cbd0ebf89e72266af7c0c13c94fd2eb37d327418",
+  "git_commit": "57c4fd41cc3c2602ef62716e0fb867e8439d29c0",
   "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
   "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
   "aws_region": "{{env `AWS_DEFAULT_REGION`}}",
