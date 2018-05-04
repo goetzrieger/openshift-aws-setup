@@ -22,7 +22,7 @@ packer build -var-file=vars.json -color=false packer.json | tee build.log
  "rhsm_org_id": "myrhsmorgid",
  "rhsm_key_id": "myrhsmkeyid",
  "rhsm_pool_id": "",
- "ami_id": "myamisource"
+ "ami_id": "ami-c998b6b2"
 }
 ```
 
@@ -36,7 +36,7 @@ packer build -var-file=vars.json -color=false packer.json | tee build.log
  "rhsm_org_id": "",
  "rhsm_key_id": "",
  "rhsm_pool_id": "",
- "ami_id": "myamisource"
+ "ami_id": "ami-c998b6b2"
 }
 ```
 
@@ -50,6 +50,6 @@ packer build -var-file=vars.json -color=false packer.json | tee build.log
  "rhsm_org_id": "",
  "rhsm_key_id": "",
  "rhsm_pool_id": "myrhsmpoolid",
- "ami_id": "myamisource"
+ "ami_id": "ami-c998b6b2"
 }
 ```
