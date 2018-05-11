@@ -65,10 +65,10 @@
    "inline": [
     "/usr/bin/subscription-manager repos --disable=\"*\"",
     "/usr/bin/yum-config-manager --disable \\*",
-    "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms --enable=rhel-server-rhscl-6-rpms",
+    "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms",
     "/usr/bin/rpmkeys --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release",
     "/usr/bin/yum check-update",
-    "INSTALL_PKGS='rh-nodejs6* autoconf automake bzip2 gcc-c++ gd-devel gdb git libcurl-devel libxml2-devel libxslt-devel lsof make mariadb-devel mariadb-libs openssl-devel patch postgresql-devel procps-ng sqlite-devel unzip wget which zlib-devel'",
+    "INSTALL_PKGS='autoconf automake bzip2 gcc-c++ gd-devel gdb git libcurl-devel libxml2-devel libxslt-devel lsof make mariadb-devel mariadb-libs openssl-devel patch postgresql-devel procps-ng sqlite-devel unzip wget which zlib-devel'",
     "/usr/bin/yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS",
     "/usr/bin/rpm -V $INSTALL_PKGS",
     "/usr/bin/yum clean all -y",
