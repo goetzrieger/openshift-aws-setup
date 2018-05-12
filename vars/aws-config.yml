@@ -29,6 +29,8 @@ aws_key_pair: "mykeypair"
 # to locate a suitable image
 ami_id: "ami-cfa343b7"
 
+# Whether to install cloudforms
+install_cloudforms: false
 # Whether to install metrics
 install_metrics: false
 # Whether to install prometheus
@@ -115,7 +117,7 @@ os_sdn_network_plugin_name: "redhat/openshift-ovs-subnet"
 # os_sdn_network_plugin_name: "redhat/openshift-ovs-networkpolicy"
 
 #####################################################################
-# This playbook can optionally install CNS (Gluster) for applications. 
+# This playbook can optionally install CNS (Gluster) for applications.
 # It will use the first three app nodes as the gluster nodes, all
 # infra components requiring storage will use gluster instead of
 # AWS.
@@ -138,7 +140,7 @@ gluster_volume_size: 300
 gluster_block_host_volume_size: 150
 
 #####################################################################
-# Variables you do not want to change unless you are sure you know 
+# Variables you do not want to change unless you are sure you know
 # what you are doing
 #####################################################################
 
