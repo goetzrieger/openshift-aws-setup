@@ -15,15 +15,22 @@
   with_items: "{{ generic_users }}"
   when: create_generic_user
 
-- name: Add admin accounts to master for Cockpit
-  shell: "useradd --home /home/{{item.name}} {{item.name}} && echo {{item.name}}:{{item.password}} | chpasswd –crypt-method=SHA512"
-  when: item.admin
-  with_items: "{{ users }}"
+- name: Add password for cockpit
+  user:
+    name: "{{amazon_user}}"
+    password: "{{ cockpit_password | password_hash('sha512') }}"
   become: true
+  when: cockpit_password is defined and cockpit_password|length>0
 
-- name: oc login as admin users for cockpit to work
-  shell: "oc login -u {{item.name}} -p {{item.password}} https://localhost:8443 --insecure-skip-tls-verify=true"
-  when: item.admin
-  with_items: "{{ users }}"
-  sudo: true
-  sudo_user: "{{item.name}}"
+# - name: Add admin accounts to master for Cockpit
+#   shell: "useradd --home /home/{{item.name}} {{item.name}} && echo {{item.name}}:{{item.password}} | chpasswd –crypt-method=SHA512"
+#   when: item.admin
+#   with_items: "{{ users }}"
+#   become: true
+
+# - name: oc login as admin users for cockpit to work
+#   shell: "oc login -u {{item.name}} -p {{item.password}} https://localhost:8443 --insecure-skip-tls-verify=true"
+#   when: item.admin
+#   with_items: "{{ users }}"
+#   sudo: true
+#   sudo_user: "{{item.name}}"

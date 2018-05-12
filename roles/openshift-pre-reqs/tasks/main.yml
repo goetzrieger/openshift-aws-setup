@@ -14,12 +14,9 @@
       - "psacct"
       - "docker-1.13.1"
       - "ntp"
+      - "cockpit"
     state: "present"
   become: true
-
-# - name: enable ntp on master and nodes
-#   service: name=ntpd state=started enabled=yes
-#   become: true
 
 - name: configure docker storage
   template:

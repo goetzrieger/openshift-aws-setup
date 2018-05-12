@@ -11,8 +11,6 @@
       - "ansible"
       - "atomic-openshift-utils"
     state: "present"
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"
   become: true
   when: deployment_type == 'origin'
 
@@ -21,8 +19,6 @@
     name:
       - "atomic-openshift-utils"
     state: "present"
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"
   become: true
   when: deployment_type != 'origin'
 
@@ -30,23 +26,17 @@
   copy:
     src: ../files/ansible.cfg
     dest: "~{{amazon_user}}/ansible.cfg"
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"
 
 - name: copy inventory for openshift istallation
   template:
     src: "../files/openshift_inventory.cfg"
     dest: "~{{amazon_user}}/openshift_inventory.cfg"
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"
 
 - name: checkout openshift ansible repo on bastion
   git:
     repo: "https://github.com/openshift/openshift-ansible"
     dest: "~{{amazon_user}}/openshift-ansible"
     version: "{{openshift_branch}}"
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"
   when: deployment_type == 'origin'
 
 - name: copy script for openshift installation
@@ -54,7 +44,6 @@
     src: "../files/install-openshift.sh"
     dest: "~{{amazon_user}}/install-openshift.sh"
     mode: "0775"
-  delegate_to: "{{bastion_public_ip}}"
   remote_user: "{{amazon_user}}"
 
 - name: provide details to check installation
@@ -63,5 +52,3 @@
 
 - name: run openshift installation script
   shell: './install-openshift.sh {{deployment_type}}  |& tee install-openshift.log'
-  delegate_to: "{{bastion_public_ip}}"
-  remote_user: "{{amazon_user}}"

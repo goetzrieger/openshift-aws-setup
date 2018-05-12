@@ -35,6 +35,17 @@ install_metrics: false
 install_prometheus: false
 # Whether to install logging
 install_logging: false
+# Whether to install grafana, make sure to install prometheus too
+# Note grafana playbook currently broken in OCP, do not set to true
+# See https://github.com/openshift/openshift-ansible/issues/7375
+install_grafana: false
+
+# Uncomment and set password to set passwd for ec2-user
+# which can then be used to login into cockpit. Please be
+# careful and do not check this file into github. In fact
+# just use the -e option when running ansible to set this
+# password.
+# cockpit_password: "changeme!"
 
 # Users to create in OpenShift, highly recommend changing password
 # Set admin to true for users you want to be the cluster administrator

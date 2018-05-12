@@ -150,18 +150,19 @@
 # Install Openshift
 #############################################################
 - name: Install OpenShift
-  hosts: localhost
+  hosts: bastion
+  remote_user: "{{ amazon_user }}"
 
   vars_files:
     - vars/aws-config.yml
 
   vars:
 #    nodes: "{{ lookup('file','nodes.json') | from_json }}"
-    state: 'present'
 
   roles:
   - define-derived-vars
   - openshift-install
+  - {role: grafana-install, when: install_grafana}
 
 #############################################################
 # Post-install tasks 
@@ -191,7 +192,6 @@
   roles:
   - define-derived-vars
   - add-users
-  # - {role: gluster-sc, when: install_gluster}
   - {role: update-ssl-cockpit, when: master_ssl_cert_file is defined}
   - {role: update-ssl-router, when: wildcard_ssl_cert_file is defined}
   - {role: disable-service-catalog, when: disable_service_catalog}
