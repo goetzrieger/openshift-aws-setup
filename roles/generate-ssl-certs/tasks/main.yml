@@ -5,7 +5,7 @@
 
 - name: install epel repository
   yum:
-    name: "epel-release"
+    name: "{{epel_repo_url}}"
     state: present
   register: result
   until: result | succeeded
@@ -55,7 +55,7 @@
   become: true
 
 - name: disable epel repo
-  shell: "yum-config-manager --disable epel"
+  shell: "yum erase -y epel-release"
   become: true
 
 - name: fetch master SSL certificates to local machine
