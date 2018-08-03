@@ -92,6 +92,9 @@
     - name: create directory for certs
       file: path=certs/{{public_master_dns}} state=directory
 
+    - name: create directory for certs
+      file: path=certs/{{public_subdomain_prefix}}.{{public_dns_zone}} state=directory
+
     - name: copy master SSL certificates to bastion
       copy:
         src: "{{item}}"
@@ -100,6 +103,16 @@
         - "{{master_ssl_cert_file}}"
         - "{{master_ssl_key_file}}"
       when: master_ssl_cert_file is defined
+
+    - name: copy wildcard SSL certificates to bastion
+      copy:
+        src: "{{item}}"
+        dest: certs/{{public_subdomain_prefix}}.{{public_dns_zone}}/{{item | basename}}
+      with_items:
+        - "{{wildcard_ssl_cert_file}}"
+        - "{{wildcard_ssl_key_file}}"
+        - "{{wildcard_ssl_fullchain_file}}"
+      when: wildcard_ssl_cert_file is defined
 
 #############################################################
 # Openshift Prerequisites
@@ -193,7 +206,7 @@
   - define-derived-vars
   - add-users
   - {role: update-ssl-cockpit, when: master_ssl_cert_file is defined}
-  - {role: update-ssl-router, when: wildcard_ssl_cert_file is defined}
+  #- {role: update-ssl-router, when: wildcard_ssl_cert_file is defined}
   - {role: disable-service-catalog, when: disable_service_catalog}
 
 #############################################################

@@ -19,7 +19,8 @@
 
 - name: Set wildcard SSL facts
   set_fact:
-    wildcard_ssl_cert_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/fullchain.pem
+    wildcard_ssl_cert_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/cert.pem
     wildcard_ssl_key_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/privkey.pem
+    wildcard_ssl_fullchain_file: certs/letsencrypt/{{public_subdomain_prefix}}.{{public_dns_zone}}/fullchain.pem
   when: use_lets_encrypt
 
