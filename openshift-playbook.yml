@@ -200,13 +200,13 @@
          - '\tmaster_ssl_key_file: "{{master_ssl_key_file}}"'
          - '\wildcard_ssl_cert_file: "{{wildcard_ssl_cert_file}}"'
          - '\twildcard_ssl_key_file: "{{wildcard_ssl_key_file}}"'
+         - '\twildcard_ssl_fullchain_file: "{{wildcard_ssl_fullchain_file}}"'
      when: use_lets_encrypt
 
   roles:
   - define-derived-vars
   - add-users
   - {role: update-ssl-cockpit, when: master_ssl_cert_file is defined}
-  #- {role: update-ssl-router, when: wildcard_ssl_cert_file is defined}
   - {role: disable-service-catalog, when: disable_service_catalog}
 
 #############################################################
