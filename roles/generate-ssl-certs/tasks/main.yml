@@ -23,7 +23,7 @@
 
 - name: install pyOpenSSL 16.2 for certbot
   yum:
-    name: "{{ pyopenssl_rpm_url }}"
+    name: "{{ pyopenssl_url }}"
     state: present
   register: result
   until: result | succeeded

@@ -173,7 +173,7 @@ htpasswd_path: "/etc/origin/master/htpasswd"
 # epel repo url, needed for certbot and lets encrypt
 epel_repo_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
 
-pyopenssl_rpm_url: "http://cbs.centos.org/kojifiles/packages/pyOpenSSL/0.15.1/1.el7/src/pyOpenSSL-0.15.1-1.el7.src.rpm"
+pyopenssl_url: "http://cbs.centos.org/kojifiles/packages/pyOpenSSL/16.2.0/3.el7/noarch/python2-pyOpenSSL-16.2.0-3.el7.noarch.rpm"
 
 # If true, the service catalog will be disabled
 disable_service_catalog: false
