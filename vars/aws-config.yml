@@ -3,7 +3,7 @@
 #####################################################################
 
 # AWS region to install environment into
-region: "us-west-2"
+region: "ca-central-1"
 
 # The public DNS for cluster, you must have a Route 53 zone configured for this
 public_dns_zone: "ocplab.com"
@@ -24,10 +24,10 @@ aws_key_pair: "mykeypair"
 #redhat_owner_id: "309956199498"
 
 # Use ami_id if you know the specific ami you want to use, note the ami
-# below refers to a gold image in us-west-2, it's unlikely you have access
+# below refers to an ami in ca-central-1, it's unlikely you have access
 # to it so change this variable to something appropriate. Use the AWS console
-# to locate a suitable image
-ami_id: "ami-cfa343b7"
+# to locate a suitable image for RHEL 7.5 (for OCP) or Centos 7.5 (for Origin)
+ami_id: "ami-fc20ad98"
 
 # Whether to install cloudforms
 install_cloudforms: false
