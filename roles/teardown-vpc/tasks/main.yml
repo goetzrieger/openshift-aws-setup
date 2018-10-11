@@ -15,7 +15,7 @@
       region: "{{ region }}"
       filters:
         vpc-id: "{{ vpc_facts.vpcs[0].vpc_id }}"
-    register: vpc_route_table_facts    
+    register: vpc_route_table_facts
 
   - name: Remove route tables from VPC
     ec2_vpc_route_table:
@@ -42,7 +42,7 @@
       vpc_id: "{{ item.id }}"
       region: "{{ region }}"
       state: absent
-    with_items: "{{ vpc_facts.vpcs }}"    
+    with_items: "{{ vpc_facts.vpcs }}"
 
   - name: Delete VPC
     ec2_vpc_net:
@@ -50,7 +50,6 @@
       cidr_block: "{{ vpc_cidr }}"
       region: "{{ region }}"
       state: absent
-    wait: yes  
-    with_items: "{{ vpc_facts.vpcs }}"    
+    with_items: "{{ vpc_facts.vpcs }}"
 
   when: vpc_facts.vpcs|length>0
