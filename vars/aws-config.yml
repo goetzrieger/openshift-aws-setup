@@ -106,8 +106,8 @@ deployment_type: "openshift-enterprise"
 # Only needed for Origin
 # openshift_branch: "release-3.6"ocplab.com
 
-# Only needed for Container Platform
-ocp_version: "3.10"
+# Only needed for Container Platform, note this branch does not support versions earlier then 3.11
+ocp_version: "3.11"
 
 # If true, openshift will be installed with a default node selector set to region=primary
 # to prevent applications from running on the master
