@@ -13,10 +13,10 @@
   register: result
   until: result is succeeded
   retries: 10
-  delay: 5      
+  delay: 5
   become: true
   when: (rhsm_username is defined) and
-        (rhsm_password is defined)  
+        (rhsm_password is defined)
 
 - name: Activation key registration
   redhat_subscription:
@@ -37,7 +37,7 @@
   until: task_result.rc == 0
   retries: 10
   delay: 5
-  ignore_errors: no      
+  ignore_errors: no
   become: true
   when: rhsm_pool is defined
 
@@ -46,13 +46,13 @@
   register: result
   until: result is succeeded
   retries: 10
-  delay: 5      
+  delay: 5
   become: true
 
 - name: Enable required repos
-  shell: 'subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-{{ocp_version}}-rpms" --enable="rhel-7-fast-datapath-rpms" --enable="rhel-7-server-ansible-2.4-rpms"'
+  shell: 'subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-{{ocp_version}}-rpms" --enable="rhel-7-server-ansible-2.6-rpms"'
   register: result
   until: result is succeeded
   retries: 10
-  delay: 5      
+  delay: 5
   become: true
