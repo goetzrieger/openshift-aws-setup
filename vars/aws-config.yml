@@ -31,7 +31,7 @@ install_metrics: false
 install_logging: false
 # Whether to enable monitoring (prometheus) storage, monitoring required
 # for new console so no point not installing it
-monitoring_storage_enabled: true
+monitoring_storage_enabled: false
 
 # Uncomment and set password to set passwd for ec2-user
 # which can then be used to login into cockpit. Please be
