@@ -12,7 +12,4 @@ ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/ope
 {% else %}
 ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/prerequisites.yml
 ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/deploy_cluster.yml
-{% if install_cloudforms %}
-ansible-playbook -v -i ~{{amazon_user}}/openshift_inventory.cfg ${OA_PREFIX}/openshift-ansible/playbooks/openshift-management/add_container_provider.yml
-{% endif %}
 {% endif %}

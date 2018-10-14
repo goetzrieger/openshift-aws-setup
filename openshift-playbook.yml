@@ -177,7 +177,6 @@
   roles:
   - define-derived-vars
   - openshift-install
-  - {role: grafana-install, when: install_grafana}
 
 #############################################################
 # Post-install tasks

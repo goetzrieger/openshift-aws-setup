@@ -1,8 +1,0 @@
----
-- name: Install grafana
-  command: ansible-playbook ~{{amazon_user}}/openshift_inventory.cfg /usr/share/ansible/openshift-ansible/playbooks/openshift-grafana/config.yml
-  when: deployment_type="openshift-enterprise"
-
-- name: Install grafana
-  command: ansible-playbook ~{{amazon_user}}/openshift_inventory.cfg /home/{{amazon_user}}/openshift-ansible/playbooks/openshift-grafana/config.yml
-  when: deployment_type="origin"

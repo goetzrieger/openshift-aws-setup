@@ -8,6 +8,9 @@ AWS related configuration can be customised by modifying ```vars/aws-config.yaml
 
 ## Prerequisites
 
+ - If installing OpenShift Container Platform rather then Origin, you must have:
+   - a valid subscription crendential, either username/password or orgid/activationkey from https://access.redhat.com
+   - a valid username/password for the Red Hat Registry. You can create a username/token at https://access.redhat.com/terms-based-registry
  - Ansible 2.4.2 or later is required
  - AWS credentials: access key & secret --> http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html
  - Ansible installed --> http://docs.ansible.com/ansible/intro_installation.html
@@ -43,19 +46,13 @@ The playbook can optionally install CNS storage (gluster) as the default persist
 
 When installing gluster, make sure the volume size is big enough to host metrics and logging volumes + 20% or so.
 
-## Metrics, Logging and Prometheus (3.7+)
+## Metrics and Logging
 
-The playbook can optionally install metrics, logging or prometheus (on 3.7+ only). To do so, change ```install_metrics```, ```install_logging``` and ```install_prometheus``` to true.
+The playbook can optionally install metrics and logging. To do so, change ```install_metrics``` and ```install_logging``` respectively to true.
 
 ## OpenShift Inventory
 
 The OpenShift inventory can be customized by modifying ```roles/openshift-install/files/openshift_inventory.cfg``` if you want to have more advanced control over certain features.
-
-## Master and User Pods
-
-By default, the master will not host user pods, just infra pods. If you want the master to host user pods, change ```install_node_selector``` to false in ```vars/aws-config.yml```. Note that if you also install gluster, this will cause the gluster nodes to host user pods as well.
-
-_Note:_ You may want to set ```install_node_selector``` to false when you install gluster as there was an existing bug with the gluster install that causes the gluster pods to fail to be scheduled when this is enabled. This could also be corrected by updating the ```roles/openshift-install/files/openshift_inventory.cfg``` file to add the primary region to gluster.
 
 ## SSL
 
@@ -82,11 +79,11 @@ Installing OpenShift Container Platform (OCP) requires a Red Hat subscription an
 and the name of the pool to use to the script or a Red Hat organization and activation id.
 
 ```
-./openshift-playbook-run.sh -e rhsm_username=me@something.com -e rhsm_password=mypassword -e rhsm_pool="sas876sa8sa76sjk..."
+./openshift-playbook-run.sh -e rhsm_username=me@something.com -e rhsm_password=mypassword -e rhsm_pool="sas876sa8sa76sjk..." -e oreg_auth_user="<registry-username>" -e oreg_auth_password="<registry-token>"
 ```
 or
 ```
-./openshift-playbook-run.sh -e rhsm_key_id=xxxxx -e rhsm_org_id=xxxxx"
+./openshift-playbook-run.sh -e rhsm_key_id=xxxxx -e rhsm_org_id=xxxxx" -e oreg_auth_user="<registry-username>" -e oreg_auth_password="<registry-token>"
 ```
 Note the above is just an example, please update all variables including the pool name which is correct for your situation.
 

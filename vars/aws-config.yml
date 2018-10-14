@@ -17,30 +17,21 @@ public_subdomain_prefix: "apps"
 # Amazon key pair to use, must exist before running script. Please generate in AWS management console.
 aws_key_pair: "mykeypair"
 
-# You have a choice, if you know the specific AMI you want to use, reference it by ami_id
-# If you do not know the ami_id, comment out the ami_id variable and uncomment the redhat_owner_id
-
-# Use the owner tag if you want to look up the AMI automatically
-#redhat_owner_id: "309956199498"
-
-# Use ami_id if you know the specific ami you want to use, note the ami
-# below refers to an ami in ca-central-1, it's unlikely you have access
+# Specify ami you want to use, note the ami
+# below refers to a gold image in ca-central-1, it's unlikely you have access
 # to it so change this variable to something appropriate. Use the AWS console
-# to locate a suitable image for RHEL 7.5 (for OCP) or Centos 7.5 (for Origin)
-ami_id: "ami-fc20ad98"
+# to locate a suitable image
 
-# Whether to install cloudforms
-install_cloudforms: false
+# Standard ca-central-1 Gold Image AMI
+ami_id: "ami-e320ad87"
+
 # Whether to install metrics
 install_metrics: false
-# Whether to install prometheus
-install_prometheus: false
 # Whether to install logging
 install_logging: false
-# Whether to install grafana, make sure to install prometheus too
-# Note grafana playbook currently broken in OCP, do not set to true
-# See https://github.com/openshift/openshift-ansible/issues/7375
-install_grafana: false
+# Whether to enable monitoring (prometheus) storage, monitoring required
+# for new console so no point not installing it
+monitoring_storage_enabled: true
 
 # Uncomment and set password to set passwd for ec2-user
 # which can then be used to login into cockpit. Please be
@@ -109,10 +100,6 @@ deployment_type: "openshift-enterprise"
 # Only needed for Container Platform, note this branch does not support versions earlier then 3.11
 ocp_version: "3.11"
 
-# If true, openshift will be installed with a default node selector set to region=primary
-# to prevent applications from running on the master
-install_node_selector: true
-
 # The network plugin use, uses the flat plugin by default
 os_sdn_network_plugin_name: "redhat/openshift-ovs-subnet"
 # os_sdn_network_plugin_name: "redhat/openshift-ovs-multitenant"
@@ -156,6 +143,10 @@ logging_volume_size: 50
 
 # Registry volume size, only used when gluster is used
 registry_volume_size: 50
+
+# Prometheus storage sizes
+prometheus_volume_size: 50
+alertmanager_volume_size: 2
 
 # namespace is used to uniquely differentiate the stack
 namespace: "openshift"
