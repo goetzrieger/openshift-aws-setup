@@ -4,7 +4,6 @@
      ami_id: "{{ami_id}}"
      region: "{{region}}"
   register: "ami_find"
-  when: ami_id is defined
 
 - name: Provision master
   ec2:
