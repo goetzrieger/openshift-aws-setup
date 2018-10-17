@@ -9,6 +9,8 @@
   with_items:
     - "bastion"
     - "master"
+    - "infra"
+  ignore_errors: true
 
 - name: Delete node routes
   include: delete-route.yml zone={{ dns_zone }} record="node{{item}}.{{ dns_zone }}" private_zone="true"

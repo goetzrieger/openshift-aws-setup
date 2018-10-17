@@ -33,7 +33,7 @@ install_logging: false
 # for new console so no point not installing it
 monitoring_storage_enabled: false
 
-# Uncomment and set password to set passwd for ec2-user
+# Uncomment and set password for ec2-user
 # which can then be used to login into cockpit. Please be
 # careful and do not check this file into github. In fact
 # just use the -e option when running ansible to set this
@@ -88,6 +88,13 @@ docker_volume_size: 50
 
 # The number of application nodes in the cluster
 app_nodes: 3
+
+# Create an infra node with an elastic IP instead of combined master/infra
+# Useful for larg'ish workshops where you want to split the workload and not have
+# the master doing everything
+standalone_infra_node: false
+infra_ami_size: "m4.xlarge"
+infra_root_volume_size: 50
 
 # The type of OpenShift deployment, must be either origin or openshift-enterprise.
 # To install OpenShift Enterprise, you must have a valid OpenShift subscription

@@ -22,7 +22,7 @@
     command: "create"
     overwrite: yes
 
-- name: add master dns 
+- name: add master dns
   route53:
     zone: "{{dns_zone}}"
     record: "master.{{dns_zone}}"
@@ -35,7 +35,21 @@
     command: "create"
     overwrite: yes
 
-- name: add node dns 
+- name: add infra dns
+  route53:
+    zone: "{{dns_zone}}"
+    record: "infra.{{dns_zone}}"
+    type: A
+    ttl: 300
+    value: "{{master_private_ip}}"
+    wait: yes
+    vpc_id: "{{vpc_id}}"
+    private_zone: true
+    command: "create"
+    overwrite: yes
+  when: standalone_infra_node
+
+- name: add node dns
   route53:
     zone: "{{dns_zone}}"
     record: "node{{item.index}}.{{dns_zone}}"
@@ -70,3 +84,16 @@
     wait: yes
     command: "create"
     overwrite: yes
+  when: not standalone_infra_node
+
+- name: add public wildcard dns
+  route53:
+    zone: "{{public_dns_zone}}"
+    record: "*.{{public_subdomain_prefix}}.{{public_dns_zone}}"
+    type: A
+    ttl: 300
+    value: "{{infra_public_ip}}"
+    wait: yes
+    command: "create"
+    overwrite: yes
+  when: standalone_infra_node
