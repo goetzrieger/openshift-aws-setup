@@ -81,3 +81,4 @@
     instance_name: "{{ item.index}}"
   with_items: "{{nodes[0:3]}}"
   when: install_gluster
+
