@@ -15,3 +15,6 @@ aws-credentials
 *.retry
 private*
 secret*
+
+# ansible
+*.retry
